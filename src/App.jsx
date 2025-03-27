@@ -96,6 +96,9 @@ function App() {
         .fadeIn-anime {
           animation: fadeIn 1s ease-out;
         }
+                  body {
+          overflow: hidden; /* Hide scrollbar during animation */
+        }
       `}</style>
     </div>
   );
