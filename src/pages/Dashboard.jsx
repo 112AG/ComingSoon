@@ -117,7 +117,7 @@ function Dashboard() {
 }
 
 .blow-effect {
-  animation: blowEffect 1s ease-out forwards;
+  animation: blowEffect 0.8s ease-out forwards;
 }`}</style>
     </div>
   );
