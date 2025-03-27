@@ -24,10 +24,12 @@ function Dashboard() {
   return (
     <div>
       {done ? (
-        <div className="mt-2 shadow-2xl hover:shadow-xl bg-white rounded-2xl p-8 h-[342px] flex items-center justify-center flex-col transition hover:scale-98">
+        <div className="mt-2 shadow-2xl hover:shadow-xl bg-white rounded-2xl p-8  h-[342px] w-[462px]  transition hover:scale-98">
+          <div className='h-full w-full flex items-center justify-center flex-col blow-effect'>
           <img src={OK} alt="Done" className='h-[78px]' />
           <h2 className="text-4xl font-bold text-green-500">Thank You!</h2>
-          <p className='text-green-500'>Thank you for getting in touch. We will get back to you soon.</p>
+          <p className='text-green-500 font-medium leading-tight'>Thank you for getting in touch. We will get back to you soon.</p>
+          </div>
         </div>
       ) : (
         <div className="mt-2 shadow-2xl hover:shadow-xl bg-white rounded-2xl py-8 transition hover:scale-98">
@@ -82,7 +84,6 @@ function Dashboard() {
               </select>
             </div>
 
-            {/* Message Box */}
             <textarea
               name="message"
               placeholder="Your Message"
@@ -102,6 +103,22 @@ function Dashboard() {
           </form>
         </div>
       )}
+
+      <style jsx>{`
+      @keyframes blowEffect {
+  0% {
+    transform: scale(0.5); 
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1); 
+    opacity: 1; 
+  }
+}
+
+.blow-effect {
+  animation: blowEffect 1s ease-out forwards;
+}`}</style>
     </div>
   );
 }
