@@ -6,9 +6,9 @@ import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
-    <div className="py-[26px] px-[26px] w-full flex flex-col items-center  min-h-screen bg-gradient-to-r from-blue-100 to-purple-200 text-center fadeIn-anime">
+    <div className="py-[26px] px-[26px] w-full flex flex-col items-center min-h-screen bg-gradient-to-r from-blue-100 to-purple-200 text-center fadeIn-anime">
       <Header />
-      <main className="container mx-auto p-4  flex items-center justify-center">
+      <main className="mx-auto py-2 flex items-center justify-center">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
@@ -95,9 +95,6 @@ function App() {
 
         .fadeIn-anime {
           animation: fadeIn 1s ease-out;
-        }
-                  body {
-          overflow: hidden; /* Hide scrollbar during animation */
         }
       `}</style>
     </div>
