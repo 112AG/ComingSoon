@@ -7,6 +7,7 @@ function Footer() {
 
     <Link
       to="https://www.facebook.com/Sdfinancialservices.fb"
+       target="_blank"
       className="
   w-12 h-12
   flex items-center justify-center
@@ -25,6 +26,7 @@ function Footer() {
 
     <Link
       to="https://www.instagram.com/sd.financial_services/"
+      target="_blank"
       className="
   w-12 h-12
   flex items-center justify-center
@@ -43,6 +45,7 @@ function Footer() {
 
     <Link
       to="https://www.linkedin.com/company/sdfinancialservices"
+      target="_blank"
       className="
   w-12 h-12
   flex items-center justify-center
