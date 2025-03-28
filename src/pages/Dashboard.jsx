@@ -18,24 +18,25 @@ function Dashboard() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-     setDone(true);  
+    setDone(true);
   };
 
   return (
-    <div>
+    <div className="flex items-center justify-center h-full py-8 px-0 sm:px-6 lg:px-8">
       {done ? (
-        <div className="mt-2 shadow-2xl hover:shadow-xl bg-white rounded-2xl p-8  h-[342px] w-[462px]  transition hover:scale-98">
-          <div className='h-full w-full flex items-center justify-center flex-col blow-effect'>
-          <img src={OK} alt="Done" className='h-[78px]' />
-          <h2 className="text-4xl font-bold text-green-500">Thank You!</h2>
-          <p className='text-green-500 font-medium leading-tight'>Thank you for getting in touch. We will get back to you soon.</p>
+        <div className="bg-white shadow-2xl hover:shadow-xl rounded-2xl p-8 transition hover:scale-98 w-full max-w-md sm:max-w-lg">
+          <div className="flex flex-col items-center justify-center h-full blow-effect">
+            <img src={OK} alt="Done" className="h-20 w-auto" />
+            <h2 className="text-3xl sm:text-4xl font-bold text-green-500 mt-4">Thank You!</h2>
+            <p className="text-green-500 font-medium mt-2 text-center">
+              Thank you for getting in touch. We will get back to you soon.
+            </p>
           </div>
         </div>
       ) : (
-        <div className="mt-2 shadow-2xl hover:shadow-xl bg-white rounded-2xl py-8 transition hover:scale-98">
-          <h1 className="text-4xl font-bold text-[#174F9C] mt-1">Get in Touch</h1>
-
-          <form onSubmit={handleSubmit} className="pt-6 px-6 w-full">
+        <div className="bg-white shadow-2xl hover:shadow-xl rounded-2xl sm:py-8 py-4 transition hover:scale-98 w-full min-w-[318px] sm:max-w-lg">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#174F9C] text-center">Get in Touch</h1>
+          <form onSubmit={handleSubmit} className="sm:pt-6 pt-4 sm:px-6 px-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input
                 type="text"
@@ -46,7 +47,6 @@ function Dashboard() {
                 required
                 className="w-full p-3 border border-gray-400 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
               />
-
               <input
                 type="email"
                 name="email"
@@ -56,7 +56,6 @@ function Dashboard() {
                 required
                 className="w-full p-3 border border-gray-400 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
               />
-
               <input
                 type="tel"
                 name="phone"
@@ -66,22 +65,36 @@ function Dashboard() {
                 required
                 className="w-full p-3 border border-gray-400 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
               />
-
-              <select
-                name="service"
-                value={formData.service}
-                onChange={handleChange}
-                required
-                className="w-full p-3 border border-gray-400 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
-              >
-                <option value="">Services *</option>
-                <option value="Business Loan">Business Loan</option>
-                <option value="Personal Loan">Personal Loan</option>
-                <option value="Home Loan">Home Loan</option>
-                <option value="Loan Against Property">Loan Against Property</option>
-                <option value="Auto Loan">Auto Loan</option>
-                <option value="Working Capital">Working Capital</option>
-              </select>
+              <div className="relative w-full">
+                <select
+                  name="service"
+                  value={formData.service}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-3 border border-gray-400 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
+                >
+                  <option value="">Services *</option>
+                  <option value="Business Loan">Business Loan</option>
+                  <option value="Personal Loan">Personal Loan</option>
+                  <option value="Home Loan">Home Loan</option>
+                  <option value="Loan Against Property">Loan Against Property</option>
+                  <option value="Auto Loan">Auto Loan</option>
+                  <option value="Working Capital">Working Capital</option>
+                  <option value="Health Insurance">Health Insurance</option>
+                  <option value="Life Insurance">Life Insurance</option>
+                </select>
+                <svg
+                  className="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-600"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
             </div>
 
             <textarea
@@ -105,20 +118,21 @@ function Dashboard() {
       )}
 
       <style jsx>{`
-      @keyframes blowEffect {
-  0% {
-    transform: scale(0.5); 
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1); 
-    opacity: 1; 
-  }
-}
+        @keyframes blowEffect {
+          0% {
+            transform: scale(0.5);
+            opacity: 0;
+          }
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
 
-.blow-effect {
-  animation: blowEffect 0.8s ease-out forwards;
-}`}</style>
+        .blow-effect {
+          animation: blowEffect 0.8s ease-out forwards;
+        }
+      `}</style>
     </div>
   );
 }

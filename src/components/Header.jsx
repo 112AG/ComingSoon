@@ -7,7 +7,7 @@ function Header() {
 
   return (
     <div className='w-full flex items-center justify-between '>
-      <img src={viteLogo} alt="Logo" className="h-[58px]" />
+      <img src={viteLogo} alt="Logo" className="h-[42px] sm:h-[58px]" />
       <button 
         onClick={goBack} 
         className="h-[40px] w-[40px] bg-white rounded-full hover:bg-gray-300 transition shadow-xl"
