@@ -1,24 +1,45 @@
-import React, { useState } from 'react';
-import OK from '../assets/OK.png';
+import React, { useState } from "react";
+import OK from "../assets/OK.png";
 
 function Dashboard() {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    service: '',
-    message: '',
+  const [formDatas, setFormDatas] = useState({
+    Name: "",
+    Email: "",
+    Phone: "",
+    Services: "",
+    Message: "",
   });
 
   const [done, setDone] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormDatas({ ...formDatas, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setDone(true);
+    setIsLoading(true);
+    setError(null);
+
+    const formData = new FormData();
+    Object.keys(formDatas).forEach((key) => {
+      formData.append(key, formDatas[key]);
+    });
+
+
+      const response = await fetch(
+        "https://script.google.com/macros/s/AKfycbzACu2Vls3zltT5eAFVvP4FiRRKulAWpMBtuBMSQ9geto1AIizL2E6j7rSvZ7IuopCRIQ/exec",
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then(res=>res.text()).then(data=> {
+        alert(data)
+      }).catch(error => console.log(error))
+      setDone(true);
+      setIsLoading(false);
   };
 
   return (
@@ -27,48 +48,58 @@ function Dashboard() {
         <div className="bg-white shadow-2xl hover:shadow-xl rounded-2xl p-8 transition hover:scale-98 w-full max-w-md sm:max-w-lg">
           <div className="flex flex-col items-center justify-center h-full blow-effect">
             <img src={OK} alt="Done" className="h-20 w-auto" />
-            <h2 className="text-3xl sm:text-4xl font-bold text-green-500 mt-4">Thank You!</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-green-500 mt-4">
+              Thank You!
+            </h2>
             <p className="text-green-500 font-medium mt-2 text-center">
               Thank you for getting in touch. We will get back to you soon.
             </p>
+            <button
+              onClick={() => setDone(false)}
+              className="mt-6 px-6 py-2 bg-[#174F9C] text-white rounded-full shadow-xl hover:shadow-md transition"
+            >
+              Submit Another Response
+            </button>
           </div>
         </div>
       ) : (
         <div className="bg-white shadow-2xl hover:shadow-xl rounded-2xl sm:py-8 py-4 transition hover:scale-98 w-full min-w-[318px] sm:max-w-lg">
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#174F9C] text-center">Get in Touch</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#174F9C] text-center">
+            Get in Touch
+          </h1>
           <form onSubmit={handleSubmit} className="sm:pt-6 pt-4 sm:px-6 px-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input
                 type="text"
-                name="fullName"
+                name="Name"
                 placeholder="Full Name*"
-                value={formData.fullName}
+                value={formDatas.Name}
                 onChange={handleChange}
                 required
                 className="w-full p-3 border border-gray-400 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
                 type="email"
-                name="email"
+                name="Email"
                 placeholder="Email *"
-                value={formData.email}
+                value={formDatas.Email}
                 onChange={handleChange}
                 required
                 className="w-full p-3 border border-gray-400 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
                 type="tel"
-                name="phone"
+                name="Phone"
                 placeholder="Phone *"
-                value={formData.phone}
+                value={formDatas.Phone}
                 onChange={handleChange}
                 required
                 className="w-full p-3 border border-gray-400 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
               />
               <div className="relative w-full">
                 <select
-                  name="service"
-                  value={formData.service}
+                  name="Services"
+                  value={formDatas.Services}
                   onChange={handleChange}
                   required
                   className="w-full p-3 border border-gray-400 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
@@ -77,47 +108,43 @@ function Dashboard() {
                   <option value="Business Loan">Business Loan</option>
                   <option value="Personal Loan">Personal Loan</option>
                   <option value="Home Loan">Home Loan</option>
-                  <option value="Loan Against Property">Loan Against Property</option>
+                  <option value="Loan Against Property">
+                    Loan Against Property
+                  </option>
                   <option value="Auto Loan">Auto Loan</option>
                   <option value="Working Capital">Working Capital</option>
                   <option value="Health Insurance">Health Insurance</option>
                   <option value="Life Insurance">Life Insurance</option>
                 </select>
-                <svg
-                  className="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-600"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
               </div>
             </div>
 
             <textarea
-              name="message"
+              name="Message"
               placeholder="Your Message"
-              value={formData.message}
+              value={formDatas.Message}
               onChange={handleChange}
               className="w-full mt-4 p-3 border border-gray-400 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 h-32 resize-none"
             ></textarea>
 
+            {error && (
+              <div className="text-red-500 text-center mt-4">{error}</div>
+            )}
+
             <div className="flex justify-center w-full">
               <button
                 type="submit"
-                className="mt-6 px-6 py-2 bg-[#174F9C] text-white rounded-full shadow-xl flex items-center gap-2 hover:shadow-md transition"
+                disabled={isLoading}
+                className="mt-6 px-6 py-2 bg-[#174F9C] text-white rounded-full shadow-xl flex items-center gap-2 hover:shadow-md transition disabled:opacity-50"
               >
-                Submit
+                {isLoading ? "Submitting..." : "Submit"}
               </button>
             </div>
           </form>
         </div>
       )}
 
-      <style jsx>{`
+      <style>{`
         @keyframes blowEffect {
           0% {
             transform: scale(0.5);
