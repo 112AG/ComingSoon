@@ -40,6 +40,13 @@ function Dashboard() {
       }).catch(error => console.log(error))
       setDone(true);
       setIsLoading(false);
+      setFormDatas({
+        Name: "",
+        Email: "",
+        Phone: "",
+        Services: "",
+        Message: "",
+      })
   };
 
   return (
