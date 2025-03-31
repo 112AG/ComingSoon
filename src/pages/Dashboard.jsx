@@ -3,11 +3,12 @@ import OK from "../assets/OK.png";
 
 function Dashboard() {
   const [formDatas, setFormDatas] = useState({
+    Date: new Date().toLocaleDateString(),
+    Time: new Date().toLocaleTimeString(),
     Name: "",
     Email: "",
     Phone: "",
     Services: "",
-    Message: "",
   });
 
   const [done, setDone] = useState(false);
@@ -30,17 +31,19 @@ function Dashboard() {
 
 
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbzACu2Vls3zltT5eAFVvP4FiRRKulAWpMBtuBMSQ9geto1AIizL2E6j7rSvZ7IuopCRIQ/exec",
+        "https://script.google.com/macros/s/AKfycbzmWO6fJ5XeIuy1I6rpayWLs0XaCO-sJlhNWSukfWpcsXRjRzPdjD60e113yhXfrvMs1A/exec",
         {
           method: "POST",
           body: formData,
         }
       ).then(res=>res.text()).then(data=> {
-        alert(data)
+        console.log('Success');
       }).catch(error => console.log(error))
       setDone(true);
       setIsLoading(false);
       setFormDatas({
+        Date: new Date().toLocaleDateString(),
+        Time: new Date().toLocaleTimeString(),
         Name: "",
         Email: "",
         Phone: "",
