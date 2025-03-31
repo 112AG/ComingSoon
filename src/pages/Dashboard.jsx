@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import OK from "../assets/OK.png";
+import emailjs from '@emailjs/browser';
 
 function Dashboard() {
   const [formDatas, setFormDatas] = useState({
@@ -9,8 +10,8 @@ function Dashboard() {
     Email: "",
     Phone: "",
     Services: "",
+    Message: "",
   });
-
   const [done, setDone] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -24,23 +25,36 @@ function Dashboard() {
     setIsLoading(true);
     setError(null);
 
-    const formData = new FormData();
-    Object.keys(formDatas).forEach((key) => {
-      formData.append(key, formDatas[key]);
-    });
+    try {
+      const formData = new FormData();
+      Object.keys(formDatas).forEach((key) => {
+        formData.append(key, formDatas[key]);
+      });
+      await fetch(
+        "https://script.google.com/macros/s/AKfycbxhqQCOlADdcvLsnEZN-2oKDOF1o-AVdLldMgbgPUiJxQQ2IqVeJcT4g_muM0hNDyU1/exec",
+        { method: "POST", body: formData }
+      );
+
+      // Email
+      const templateParams = {
+        name: formDatas.Name,
+        message: formDatas.Message,
+        email: formDatas.Email,
+        phone: formDatas.Phone,
+        services: formDatas.Services,
+      }
+      emailjs.send('service_tdlg4q8', 'template_nckx768', templateParams, {publicKey: 'EEzlADQj6V2NY9ayO',})
+      .then(
+        () => {
+          console.log('SUCCESS!');
+        },
+        (error) => {
+          console.log('FAILED...', error.text);
+        },
+      );
 
 
-      const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbzmWO6fJ5XeIuy1I6rpayWLs0XaCO-sJlhNWSukfWpcsXRjRzPdjD60e113yhXfrvMs1A/exec",
-        {
-          method: "POST",
-          body: formData,
-        }
-      ).then(res=>res.text()).then(data=> {
-        console.log('Success');
-      }).catch(error => console.log(error))
       setDone(true);
-      setIsLoading(false);
       setFormDatas({
         Date: new Date().toLocaleDateString(),
         Time: new Date().toLocaleTimeString(),
@@ -49,7 +63,12 @@ function Dashboard() {
         Phone: "",
         Services: "",
         Message: "",
-      })
+      });
+    } catch (error) {
+      setError("Submission failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -106,27 +125,25 @@ function Dashboard() {
                 required
                 className="w-full p-3 border border-gray-400 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <div className="relative w-full">
-                <select
-                  name="Services"
-                  value={formDatas.Services}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-3 border border-gray-400 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
-                >
-                  <option value="">Services *</option>
-                  <option value="Business Loan">Business Loan</option>
-                  <option value="Personal Loan">Personal Loan</option>
-                  <option value="Home Loan">Home Loan</option>
-                  <option value="Loan Against Property">
-                    Loan Against Property
-                  </option>
-                  <option value="Auto Loan">Auto Loan</option>
-                  <option value="Working Capital">Working Capital</option>
-                  <option value="Health Insurance">Health Insurance</option>
-                  <option value="Life Insurance">Life Insurance</option>
-                </select>
-              </div>
+              <select
+                name="Services"
+                value={formDatas.Services}
+                onChange={handleChange}
+                required
+                className="w-full p-3 border border-gray-400 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
+              >
+                <option value="">Services *</option>
+                <option value="Business Loan">Business Loan</option>
+                <option value="Personal Loan">Personal Loan</option>
+                <option value="Home Loan">Home Loan</option>
+                <option value="Loan Against Property">
+                  Loan Against Property
+                </option>
+                <option value="Auto Loan">Auto Loan</option>
+                <option value="Working Capital">Working Capital</option>
+                <option value="Health Insurance">Health Insurance</option>
+                <option value="Life Insurance">Life Insurance</option>
+              </select>
             </div>
 
             <textarea
@@ -156,16 +173,9 @@ function Dashboard() {
 
       <style>{`
         @keyframes blowEffect {
-          0% {
-            transform: scale(0.5);
-            opacity: 0;
-          }
-          100% {
-            transform: scale(1);
-            opacity: 1;
-          }
+          0% { transform: scale(0.5); opacity: 0; }
+          100% { transform: scale(1); opacity: 1; }
         }
-
         .blow-effect {
           animation: blowEffect 0.8s ease-out forwards;
         }
