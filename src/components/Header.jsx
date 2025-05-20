@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import viteLogo from '../../public/SDFinance.svg';
+const viteLogo = '/SDFinance.svg';
 import { NavigationContext } from '../utils/NavigationProvider ';
 
 function Header() {
